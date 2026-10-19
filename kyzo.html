@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLBB TOP UP STORE - Fast & Secure Diamonds</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Rajdhani for gaming style header -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0B0E14',
+              card: '#151B26',
+              border: '#232D3F',
+              cyan: '#00F0FF',
+              purple: '#8A2BE2',
+              amber: '#FFB800',
+              pink: '#FF2A85'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Rajdhani', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0B0E14;
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+    .glow-purple {
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+    .glow-amber {
+      box-shadow: 0 0 15px rgba(255, 184, 0, 0.3);
+    }
+    .card-selected {
+      border-color: #00F0FF !important;
+      background: linear-gradient(135deg, rgba(21, 27, 38, 0.9) 0%, rgba(0, 240, 255, 0.1) 100%) !important;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0E14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232D3F;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00F0FF;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+  <!-- ================= TOP HEADER NAVIGATION ================= -->
+  <header class="bg-brand-card/80 backdrop-blur-md border-b border-brand-border sticky top-0 z-40 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('store')">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center text-black font-extrabold text-xl shadow-lg glow-cyan">
+            <i class="fa-solid font-black fa-gem"></i>
+          </div>
+          <div>
+            <span class="font-display text-2xl font-bold tracking-wider text-white uppercase block leading-none">
+              MLBB <span class="text-cyan-400">TOPUP</span>
+            </span>
+            <span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase">Instant Game Reload</span>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs (Desktop) -->
+        <nav class="hidden md:flex space-x-2 bg-black/40 p-1.5 rounded-xl border border-brand-border">
+          <button id="nav-store" onclick="switchTab('store')" class="px-5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-md">
+            <i class="fa-solid fa-cart-shopping"></i> Store Top-Up
+          </button>
+          <button id="nav-track" onclick="switchTab('track')" class="px-5 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white transition-all flex items-center gap-2 hover:bg-brand-border/40">
+            <i class="fa-solid fa-magnifying-glass"></i> Track Order
+          </button>
+          <button id="nav-admin" onclick="switchTab('admin')" class="px-5 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white transition-all flex items-center gap-2 hover:bg-brand-border/40">
+            <i class="fa-solid fa-user-shield"></i> Admin Dashboard
+          </button>
+        </nav>
+
+        <!-- Mobile Navigation Drawer Toggle -->
+        <div class="flex md:hidden">
+          <button onclick="toggleMobileMenu()" class="p-2 rounded-lg bg-brand-border text-cyan-400 hover:text-white focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-card border-b border-brand-border px-4 pt-2 pb-4 space-y-2">
+      <button onclick="switchTab('store'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-white bg-cyan-500/20 text-cyan-400 flex items-center gap-2">
+        <i class="fa-solid fa-cart-shopping"></i> Store Top-Up
+      </button>
+      <button onclick="switchTab('track'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-gray-300 hover:bg-brand-border/40 flex items-center gap-2">
+        <i class="fa-solid fa-magnifying-glass"></i> Track Order
+      </button>
+      <button onclick="switchTab('admin'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold text-gray-300 hover:bg-brand-border/40 flex items-center gap-2">
+        <i class="fa-solid fa-user-shield"></i> Admin Dashboard
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+    <!-- ================= SECTION 1: STORE TOP-UP FORM ================= -->
+    <section id="view-store" class="block space-y-8">
+      
+      <!-- Store Banner Header -->
+      <div class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-purple-900/60 via-brand-card to-blue-900/40 p-6 sm:p-8 border border-brand-border shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center md:text-left">
+            <span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs font-bold uppercase tracking-widest border border-cyan-500/30">Official Reload Outlet</span>
+            <h1 class="text-3xl sm:text-4xl font-display font-bold text-white tracking-wide">MOBILE LEGENDS: BANG BANG</h1>
+            <p class="text-gray-300 text-sm max-w-xl">Instant diamond delivery 24/7. Select your package, submit your player details, and complete payment securely.</p>
+          </div>
+          <div class="flex items-center gap-4 bg-black/40 px-5 py-3 rounded-xl border border-brand-border/60">
+            <i class="fa-solid fa-bolt text-amber-400 text-2xl animate-pulse"></i>
+            <div class="text-left">
+              <span class="text-xs text-gray-400 uppercase font-semibold block">Avg. Processing</span>
+              <span class="text-sm font-bold text-white">1 - 3 Minutes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Form Column (8 cols) -->
+        <div class="lg:col-span-8 space-y-8">
+          
+          <!-- STEP 1: Account Details -->
+          <div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-xl">
+            <div class="flex items-center space-x-3 border-b border-brand-border pb-4 mb-6">
+              <span class="w-8 h-8 rounded-full bg-cyan-500 text-black font-extrabold flex items-center justify-center text-sm">1</span>
+              <h2 class="text-lg font-bold text-white font-display uppercase tracking-wider">Account Details</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+              <div class="md:col-span-7">
+                <label class="block text-xs font-medium text-gray-300 mb-1">User ID <span class="text-red-400">*</span></label>
+                <input type="text" id="input-userid" placeholder="e.g. 123456789" class="w-full bg-black/50 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition">
+              </div>
+              <div class="md:col-span-5">
+                <label class="block text-xs font-medium text-gray-300 mb-1">Zone ID <span class="text-red-400">*</span></label>
+                <input type="text" id="input-zoneid" placeholder="e.g. 1234" class="w-full bg-black/50 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition">
+              </div>
+            </div>
+
+            <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-black/30 p-3.5 rounded-xl border border-brand-border/50">
+              <div class="flex items-center gap-2 text-xs">
+                <i class="fa-solid fa-circle-info text-cyan-400 text-base"></i>
+                <span id="txt-nickname-status" class="text-gray-400">Verify your MLBB account nickname before placing order.</span>
+              </div>
+              <button onclick="verifyIGN()" class="w-full sm:w-auto px-4 py-2 bg-brand-border hover:bg-cyan-500 hover:text-black text-white text-xs font-bold rounded-lg transition duration-200 whitespace-nowrap flex items-center justify-center gap-2">
+                <i class="fa-solid fa-user-check"></i> Check In-Game Name
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Choose Diamond Package -->
+          <div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-xl">
+            <div class="flex items-center justify-between border-b border-brand-border pb-4 mb-6">
+              <div class="flex items-center space-x-3">
+                <span class="w-8 h-8 rounded-full bg-cyan-500 text-black font-extrabold flex items-center justify-center text-sm">2</span>
+                <h2 class="text-lg font-bold text-white font-display uppercase tracking-wider">Select Diamond Package</h2>
+              </div>
+              <span class="text-xs text-cyan-400 font-semibold" id="lbl-package-count">Loading items...</span>
+            </div>
+
+            <!-- Packages Grid -->
+            <div id="grid-packages" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <!-- Dynamically Populated -->
+            </div>
+          </div>
+
+          <!-- STEP 3: Customer Information -->
+          <div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-xl">
+            <div class="flex items-center space-x-3 border-b border-brand-border pb-4 mb-6">
+              <span class="w-8 h-8 rounded-full bg-cyan-500 text-black font-extrabold flex items-center justify-center text-sm">3</span>
+              <h2 class="text-lg font-bold text-white font-display uppercase tracking-wider">Customer Details</h2>
+            </div>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1">Full Name <span class="text-red-400">*</span></label>
+                  <input type="text" id="input-customer-name" placeholder="John Doe" class="w-full bg-black/50 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1">Email Address (for order receipts) <span class="text-red-400">*</span></label>
+                  <input type="email" id="input-customer-email" placeholder="johndoe@gmail.com" class="w-full bg-black/50 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition">
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1">Additional Notes / Special Instructions (Optional)</label>
+                <textarea id="input-customer-notes" rows="2" placeholder="e.g. Please process quickly, thanks!" class="w-full bg-black/50 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition text-sm"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: Payment Section -->
+          <div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-xl">
+            <div class="flex items-center space-x-3 border-b border-brand-border pb-4 mb-6">
+              <span class="w-8 h-8 rounded-full bg-cyan-500 text-black font-extrabold flex items-center justify-center text-sm">4</span>
+              <h2 class="text-lg font-bold text-white font-display uppercase tracking-wider">Payment Method</h2>
+            </div>
+
+            <!-- Select Payment Option -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6" id="payment-methods-grid">
+              <button onclick="selectPaymentMethod('GCash')" id="pm-GCash" class="pm-btn border-2 border-brand-border bg-black/40 hover:border-cyan-400 p-4 rounded-xl text-center transition flex flex-col items-center justify-center gap-2">
+                <i class="fa-solid fa-mobile-screen-button text-2xl text-blue-400"></i>
+                <span class="text-xs font-bold text-white">GCash</span>
+              </button>
+              <button onclick="selectPaymentMethod('Maya')" id="pm-Maya" class="pm-btn border-2 border-brand-border bg-black/40 hover:border-cyan-400 p-4 rounded-xl text-center transition flex flex-col items-center justify-center gap-2">
+                <i class="fa-solid fa-wallet text-2xl text-emerald-400"></i>
+                <span class="text-xs font-bold text-white">Maya</span>
+              </button>
+              <button onclick="selectPaymentMethod('Bank Transfer')" id="pm-Bank" class="pm-btn border-2 border-brand-border bg-black/40 hover:border-cyan-400 p-4 rounded-xl text-center transition flex flex-col items-center justify-center gap-2">
+                <i class="fa-solid fa-building-columns text-2xl text-amber-400"></i>
+                <span class="text-xs font-bold text-white">Bank Transfer</span>
+              </button>
+              <button onclick="selectPaymentMethod('PayPal')" id="pm-PayPal" class="pm-btn border-2 border-brand-border bg-black/40 hover:border-cyan-400 p-4 rounded-xl text-center transition flex flex-col items-center justify-center gap-2">
+                <i class="fa-brands fa-paypal text-2xl text-indigo-400"></i>
+                <span class="text-xs font-bold text-white">PayPal</span>
+              </button>
+            </div>
+
+            <!-- Dynamic Payment Instructions Box -->
+            <div class="bg-black/50 border border-brand-border p-5 rounded-xl space-y-4 mb-6">
+              <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-gray-400 uppercase">Payment Channel:</span>
+                  <span id="lbl-active-pm-name" class="text-sm font-extrabold text-cyan-400">GCash</span>
+                </div>
+                <span class="px-2.5 py-1 bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] rounded-full font-bold">Manual Verification</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <!-- QR Code Placeholder -->
+                <div class="md:col-span-4 flex flex-col items-center justify-center p-3 bg-brand-card rounded-lg border border-brand-border">
+                  <div class="w-28 h-28 bg-white p-2 rounded-lg flex items-center justify-center">
+                    <!-- SVG QR Code Icon -->
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-black fill-current">
+                      <path d="M10 10h30v30H10zM15 15v20h20V15zM20 20h10v10H20zM60 10h30v30H60zM65 15v20h20V15zM70 20h10v10H70zM10 60h30v30H10zM15 65v20h20V65zM20 70h10v10H20zM50 10h5v10h-5zM50 25h10v5h-10zM40 35h10v10h-10zM50 50h15v5h-15zM70 50h20v10h-20zM60 65h10v10h-10zM80 65h10v25h-10zM50 80h20v10h-20z"/>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-gray-400 mt-2">Scan QR to pay</span>
+                </div>
+
+                <!-- Account Text Info -->
+                <div class="md:col-span-8 space-y-2 text-sm">
+                  <p class="text-gray-300 text-xs" id="lbl-pm-instructions">Please send exact amount to the account below and save your receipt screenshot.</p>
+                  <div class="bg-brand-card p-3 rounded-lg border border-brand-border/60 font-mono text-xs text-cyan-300 space-y-1">
+                    <div><span class="text-gray-400">Account Name:</span> <span id="lbl-pm-account-name">MLBB TOPUP OFFICIAL</span></div>
+                    <div><span class="text-gray-400">Account Number:</span> <span id="lbl-pm-account-no" class="font-bold text-amber-300">0917-123-4567</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Inputs (Ref # and Attachment) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1">Payment Reference Number <span class="text-red-400">*</span></label>
+                <input type="text" id="input-payment-ref" placeholder="e.g. 100293848201" class="w-full bg-black/50 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition">
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1">Proof of Payment Attachment (Image / Screenshot)</label>
+                <div class="flex items-center gap-2">
+                  <input type="file" id="input-payment-file" accept="image/*" onchange="handleFileSelect(event)" class="hidden">
+                  <button type="button" onclick="document.getElementById('input-payment-file').click()" class="flex-1 bg-black/50 hover:bg-brand-border border border-brand-border text-gray-300 px-4 py-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition truncate">
+                    <i class="fa-solid fa-cloud-arrow-up text-cyan-400 text-sm"></i>
+                    <span id="lbl-file-name">Upload Screenshot...</span>
+                  </button>
+                  <button type="button" onclick="toggleUrlInput()" class="px-3 py-3 bg-brand-border text-gray-300 rounded-xl hover:text-white text-xs font-bold" title="Enter Image URL directly">
+                    <i class="fa-solid fa-link"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image URL Fallback Modal / Drawer (Hidden by default) -->
+            <div id="container-url-input" class="hidden mt-3 p-3 bg-black/40 rounded-xl border border-brand-border">
+              <label class="block text-[11px] font-medium text-gray-400 mb-1">Or paste direct image URL (e.g. Imgur, Postimages):</label>
+              <input type="text" id="input-payment-url" placeholder="https://i.imgur.com/example.png" oninput="handleUrlInput(this.value)" class="w-full bg-black/60 border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <!-- Proof Image Preview Box -->
+            <div id="preview-proof-box" class="hidden mt-4 bg-black/40 p-3 rounded-xl border border-brand-border flex items-center gap-4">
+              <img id="img-proof-preview" src="" class="w-16 h-16 object-cover rounded-lg border border-brand-border">
+              <div class="text-xs">
+                <span class="text-green-400 font-bold block"><i class="fa-solid fa-check-circle"></i> Proof Image Attached</span>
+                <span class="text-gray-400">Ready for review by administrator.</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Order Summary Sidebar Column (4 cols) -->
+        <div class="lg:col-span-4">
+          <div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-2xl sticky top-28 space-y-6">
+            <h3 class="text-base font-bold text-white font-display uppercase tracking-wider border-b border-brand-border pb-3 flex items-center justify-between">
+              <span>Order Summary</span>
+              <i class="fa-solid fa-receipt text-cyan-400"></i>
+            </h3>
+
+            <!-- Details List -->
+            <div class="space-y-3 text-xs">
+              <div class="flex justify-between text-gray-300">
+                <span class="text-gray-400">Account:</span>
+                <span id="sum-account-id" class="font-mono text-cyan-300 font-medium">Not Entered</span>
+              </div>
+              <div class="flex justify-between text-gray-300">
+                <span class="text-gray-400">Verified Player:</span>
+                <span id="sum-player-name" class="font-semibold text-amber-400">Unverified</span>
+              </div>
+              <div class="flex justify-between text-gray-300 border-t border-brand-border/40 pt-3">
+                <span class="text-gray-400">Package:</span>
+                <span id="sum-package-name" class="font-bold text-white text-right max-w-[180px] truncate">Select a package</span>
+              </div>
+              <div class="flex justify-between text-gray-300">
+                <span class="text-gray-400">Base Price:</span>
+                <span id="sum-base-price" class="font-semibold">₱0.00</span>
+              </div>
+
+              <!-- Promo Code Input -->
+              <div class="border-t border-brand-border/40 pt-3">
+                <label class="block text-[11px] font-semibold text-gray-400 mb-1">Have a Promo / Discount Code?</label>
+                <div class="flex gap-2">
+                  <input type="text" id="input-promo-code" placeholder="e.g. MLBB50" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white uppercase placeholder-gray-500 focus:outline-none focus:border-cyan-400">
+                  <button onclick="applyPromoCode()" class="px-3 py-2 bg-brand-border hover:bg-cyan-500 hover:text-black font-bold rounded-lg text-xs transition">Apply</button>
+                </div>
+                <div id="lbl-promo-status" class="text-[10px] mt-1 font-semibold"></div>
+              </div>
+
+              <div id="row-discount" class="hidden justify-between text-emerald-400 font-semibold pt-1">
+                <span>Discount Applied:</span>
+                <span id="sum-discount-val">-₱0.00</span>
+              </div>
+
+              <!-- Total Payable -->
+              <div class="border-t border-brand-border pt-4 flex items-center justify-between">
+                <div>
+                  <span class="text-xs text-gray-400 uppercase font-bold block">Total Amount</span>
+                  <span class="text-[10px] text-gray-500">Tax & Fees Included</span>
+                </div>
+                <div class="text-right">
+                  <span id="sum-total-price" class="text-2xl font-extrabold text-cyan-400 font-display">₱0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="submitOrder()" class="w-full py-4 bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-black font-extrabold text-sm uppercase tracking-wider rounded-xl transition-all transform active:scale-95 shadow-lg glow-cyan flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane text-base"></i> Confirm & Submit Order
+            </button>
+
+            <p class="text-[10px] text-gray-500 text-center leading-relaxed">
+              By clicking "Submit Order", you confirm that your MLBB User ID and Zone ID are accurate. Orders processed cannot be reversed.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 2: TRACK ORDER LOOKUP ================= -->
+    <section id="view-track" class="hidden space-y-8 max-w-4xl mx-auto">
+      <div class="bg-brand-card rounded-2xl p-6 sm:p-8 border border-brand-border shadow-2xl text-center space-y-6">
+        <div class="w-16 h-16 bg-cyan-500/10 text-cyan-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-cyan-500/30 glow-cyan">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold font-display text-white uppercase tracking-wide">Track Top-Up Order Status</h2>
+          <p class="text-gray-400 text-xs mt-1">Enter your Order Reference Number (e.g. MLBB-20261019-XXXX) or your MLBB User ID below.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+          <input type="text" id="input-track-query" placeholder="Order Ref # or MLBB User ID" class="flex-1 bg-black/60 border border-brand-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 text-sm">
+          <button onclick="trackOrderLookup()" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-search"></i> Search Status
+          </button>
+        </div>
+      </div>
+
+      <!-- Track Order Results Listing -->
+      <div id="container-track-results" class="space-y-4">
+        <!-- Dynamically Populated -->
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3: ADMIN DASHBOARD ================= -->
+    <section id="view-admin" class="hidden space-y-8">
+      
+      <!-- Admin Header / Nav Bar -->
+      <div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 border border-purple-500/30 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold font-display text-white uppercase tracking-wider">Store Admin Dashboard</h2>
+            <p class="text-xs text-gray-400">Manage live orders, package pricing, discounts, and payment configuration.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span id="lbl-admin-auth-status" class="px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/30 text-xs rounded-full font-semibold">
+            <i class="fa-solid fa-lock-open text-[10px]"></i> Authenticated
+          </span>
+          <button onclick="lockAdmin()" class="px-4 py-2 bg-brand-border hover:bg-red-500/20 hover:text-red-400 text-gray-300 text-xs font-bold rounded-xl transition flex items-center gap-2">
+            <i class="fa-solid fa-lock"></i> Lock Dashboard
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin Stats Overview -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border shadow-md space-y-1">
+          <span class="text-xs font-semibold text-gray-400 uppercase">Total Orders</span>
+          <div id="stat-total-orders" class="text-2xl font-extrabold text-white font-display">0</div>
+          <span class="text-[10px] text-gray-500">Lifetime submissions</span>
+        </div>
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border shadow-md space-y-1">
+          <span class="text-xs font-semibold text-amber-400 uppercase">Pending Review</span>
+          <div id="stat-pending-orders" class="text-2xl font-extrabold text-amber-400 font-display">0</div>
+          <span class="text-[10px] text-gray-500">Requires verification</span>
+        </div>
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border shadow-md space-y-1">
+          <span class="text-xs font-semibold text-green-400 uppercase">Completed Sales</span>
+          <div id="stat-completed-orders" class="text-2xl font-extrabold text-green-400 font-display">0</div>
+          <span class="text-[10px] text-gray-500">Top-ups delivered</span>
+        </div>
+        <div class="bg-brand-card p-5 rounded-2xl border border-brand-border shadow-md space-y-1">
+          <span class="text-xs font-semibold text-cyan-400 uppercase">Total Revenue</span>
+          <div id="stat-total-revenue" class="text-2xl font-extrabold text-cyan-400 font-display">₱0.00</div>
+          <span class="text-[10px] text-gray-500">Gross sales value</span>
+        </div>
+      </div>
+
+      <!-- Admin Secondary Nav Tabs -->
+      <div class="flex overflow-x-auto gap-2 border-b border-brand-border pb-3">
+        <button onclick="switchAdminSubTab('orders')" id="subtab-orders" class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-cyan-500 text-black">
+          <i class="fa-solid fa-list-check mr-1"></i> Orders Management
+        </button>
+        <button onclick="switchAdminSubTab('packages')" id="subtab-packages" class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-card text-gray-300 hover:text-white border border-brand-border">
+          <i class="fa-solid fa-boxes-stacked mr-1"></i> Packages & Prices
+        </button>
+        <button onclick="switchAdminSubTab('discounts')" id="subtab-discounts" class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-card text-gray-300 hover:text-white border border-brand-border">
+          <i class="fa-solid fa-ticket mr-1"></i> Promos & Discounts
+        </button>
+        <button onclick="switchAdminSubTab('payment-settings')" id="subtab-payment-settings" class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-card text-gray-300 hover:text-white border border-brand-border">
+          <i class="fa-solid fa-qrcode mr-1"></i> Payment Instructions
+        </button>
+        <button onclick="switchAdminSubTab('notifications')" id="subtab-notifications" class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-card text-gray-300 hover:text-white border border-brand-border">
+          <i class="fa-solid fa-bell mr-1"></i> Notifications & Settings
+        </button>
+      </div>
+
+      <!-- TAB 1: ORDERS MANAGEMENT TABLE -->
+      <div id="admin-panel-orders" class="space-y-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-brand-card p-4 rounded-xl border border-brand-border">
+          <!-- Search Bar -->
+          <div class="relative w-full md:w-80">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-500 text-xs"></i>
+            <input type="text" id="input-admin-search" oninput="renderAdminOrdersTable()" placeholder="Search Reference, MLBB ID, or Email..." class="w-full bg-black/50 border border-brand-border rounded-lg pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+          </div>
+          <!-- Filter Status -->
+          <div class="flex items-center gap-2 w-full md:w-auto">
+            <span class="text-xs text-gray-400 font-semibold whitespace-nowrap">Filter Status:</span>
+            <select id="select-admin-filter" onchange="renderAdminOrdersTable()" class="bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-400">
+              <option value="ALL">All Statuses</option>
+              <option value="Pending Verification">Pending Verification</option>
+              <option value="Processing">Processing</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-300">
+              <thead class="bg-black/40 text-gray-400 font-bold uppercase tracking-wider border-b border-brand-border">
+                <tr>
+                  <th class="p-4">Ref Number</th>
+                  <th class="p-4">Date / Time</th>
+                  <th class="p-4">MLBB ID (Zone)</th>
+                  <th class="p-4">Customer</th>
+                  <th class="p-4">Package</th>
+                  <th class="p-4">Total</th>
+                  <th class="p-4">Payment / Ref</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-admin-orders-body" class="divide-y divide-brand-border/40 font-mono">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: PACKAGES & PRICES MANAGER -->
+      <div id="admin-panel-packages" class="hidden space-y-6">
+        <div class="flex justify-between items-center bg-brand-card p-4 rounded-xl border border-brand-border">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase">Diamond Packages & Offers</h3>
+            <p class="text-[11px] text-gray-400">Add or edit package quantities, bonus diamonds, and active store prices.</p>
+          </div>
+          <button onclick="openPackageModal()" class="px-4 py-2 bg-cyan-500 text-black font-bold text-xs rounded-lg hover:bg-cyan-400 transition flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> Add New Package
+          </button>
+        </div>
+
+        <div id="container-admin-packages-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamically Populated -->
+        </div>
+      </div>
+
+      <!-- TAB 3: DISCOUNTS & PROMO CODES -->
+      <div id="admin-panel-discounts" class="hidden space-y-6">
+        <div class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase">Add Promo Code</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Coupon Code</label>
+              <input type="text" id="input-new-promo-code" placeholder="e.g. MLBB10" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white uppercase">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Discount Type</label>
+              <select id="select-new-promo-type" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+                <option value="PERCENT">Percentage (%)</option>
+                <option value="FIXED">Fixed Amount (₱)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Discount Value</label>
+              <input type="number" id="input-new-promo-value" placeholder="e.g. 10" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+            </div>
+          </div>
+          <button onclick="addPromoCode()" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition">
+            Save Promo Code
+          </button>
+        </div>
+
+        <div class="bg-brand-card rounded-2xl border border-brand-border p-6 space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase">Active Promo Codes</h3>
+          <div id="container-admin-promos-list" class="space-y-2">
+            <!-- Dynamically Populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: PAYMENT INSTRUCTIONS MANAGER -->
+      <div id="admin-panel-payment-settings" class="hidden space-y-6">
+        <div class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase">Manage Payment Account Info</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">GCash Account Name / Number</label>
+              <input type="text" id="cfg-gcash" value="MLBB TOPUP OFFICIAL - 09171234567" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Maya Account Name / Number</label>
+              <input type="text" id="cfg-maya" value="MLBB TOPUP OFFICIAL - 09187654321" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Bank Account (BDO/BPI/Unionbank)</label>
+              <input type="text" id="cfg-bank" value="BDO: 0012-3456-7890 (MLBB Store Inc)" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">PayPal Email</label>
+              <input type="text" id="cfg-paypal" value="payments@mlbbtopupstore.com" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+            </div>
+          </div>
+          <button onclick="savePaymentSettings()" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs rounded-xl transition">
+            <i class="fa-solid fa-floppy-disk mr-1"></i> Save Payment Config
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 5: NOTIFICATIONS & SYSTEM CONFIG -->
+      <div id="admin-panel-notifications" class="hidden space-y-6">
+        <div class="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4 max-w-2xl">
+          <h3 class="text-sm font-bold text-white uppercase">Notification Dispatcher</h3>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Admin Alert Email Address</label>
+            <input type="email" id="cfg-admin-email" value="orders-alert@mlbbtopupstore.com" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Discord / Telegram Webhook URL (For Order Alerts)</label>
+            <input type="text" id="cfg-webhook-url" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-xs text-white">
+          </div>
+          <button onclick="saveNotificationSettings()" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs rounded-xl transition">
+            Save Notification Settings
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-brand-card border-t border-brand-border mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="font-display font-bold text-white text-lg tracking-wider">MLBB TOP UP STORE</span>
+        <p class="text-xs text-gray-500">Authorized third-party game voucher dealer. Moonton copyright belongs to MLBB.</p>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-gray-400">
+        <a href="#" onclick="switchTab('store'); return false;" class="hover:text-cyan-400">Order Store</a>
+        <span>•</span>
+        <a href="#" onclick="switchTab('track'); return false;" class="hover:text-cyan-400">Track Order</a>
+        <span>•</span>
+        <a href="#" onclick="switchTab('admin'); return false;" class="hover:text-cyan-400">Admin Area</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS & OVERLAYS ================= -->
+
+  <!-- MODAL 1: Admin Passcode Login Overlay -->
+  <div id="modal-admin-login" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-8 max-w-sm w-full space-y-6 text-center shadow-2xl relative">
+      <div class="w-16 h-16 bg-purple-500/20 text-purple-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-purple-500/30">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold font-display text-white uppercase">Admin Authentication</h3>
+        <p class="text-xs text-gray-400 mt-1">Enter admin password to access management tools.</p>
+      </div>
+      <div>
+        <input type="password" id="input-admin-passcode" placeholder="Enter Admin Password" onkeydown="if(event.key==='Enter')authenticateAdmin()" class="w-full bg-black/60 border border-brand-border rounded-xl px-4 py-3 text-center text-white font-mono text-lg focus:outline-none focus:border-cyan-400">
+      </div>
+      <div class="flex gap-2">
+        <button onclick="closeAdminLoginModal(); switchTab('store');" class="w-1/2 py-3 bg-brand-border text-gray-300 hover:text-white rounded-xl text-xs font-bold">Cancel</button>
+        <button onclick="authenticateAdmin()" class="w-1/2 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold shadow-lg glow-purple">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Order Receipt Preview Modal -->
+  <div id="modal-order-receipt" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-brand-card border border-brand-border rounded-2xl max-w-lg w-full p-6 space-y-6 shadow-2xl my-8">
+      <div class="text-center border-b border-brand-border pb-4 space-y-1">
+        <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3 class="text-xl font-bold font-display text-white uppercase tracking-wider">Order Submitted!</h3>
+        <p class="text-xs text-gray-400">Your top-up order is now pending payment verification.</p>
+      </div>
+
+      <!-- Receipt Breakdown -->
+      <div class="bg-black/40 border border-brand-border/60 rounded-xl p-4 space-y-3 text-xs">
+        <div class="flex justify-between items-center border-b border-brand-border/40 pb-2">
+          <span class="text-gray-400">Order Reference:</span>
+          <span id="rcpt-ref" class="font-mono font-bold text-cyan-300"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-400">Date & Time:</span>
+          <span id="rcpt-date" class="text-gray-200"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-400">Customer Name:</span>
+          <span id="rcpt-name" class="text-gray-200 font-semibold"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-400">MLBB Account:</span>
+          <span id="rcpt-account" class="font-mono text-amber-300 font-bold"></span>
+        </div>
+        <div class="flex justify-between items-center border-t border-brand-border/40 pt-2">
+          <span class="text-gray-400">Selected Package:</span>
+          <span id="rcpt-package" class="font-bold text-white"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-400">Total Price:</span>
+          <span id="rcpt-price" class="font-extrabold text-cyan-400 text-sm"></span>
+        </div>
+        <div class="flex justify-between items-center border-t border-brand-border/40 pt-2">
+          <span class="text-gray-400">Payment Method:</span>
+          <span id="rcpt-pm" class="text-gray-200"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-400">Payment Ref #:</span>
+          <span id="rcpt-pm-ref" class="font-mono text-gray-200"></span>
+        </div>
+        <div class="flex justify-between items-center border-t border-brand-border/40 pt-2">
+          <span class="text-gray-400">Status:</span>
+          <span id="rcpt-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Pending Verification</span>
+        </div>
+      </div>
+
+      <!-- Proof Image Preview if attached -->
+      <div id="rcpt-proof-container" class="hidden space-y-1">
+        <span class="text-[11px] font-bold text-gray-400 uppercase">Uploaded Proof of Payment:</span>
+        <div class="p-2 bg-black/40 border border-brand-border rounded-xl text-center">
+          <img id="rcpt-proof-img" src="" class="max-h-40 mx-auto rounded-lg object-contain">
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="closeReceiptModal(); switchTab('track');" class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl transition">
+          Track This Order
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: View Proof of Payment (Admin View) -->
+  <div id="modal-admin-proof" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-card border border-brand-border rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-brand-border pb-3">
+        <h3 class="text-base font-bold text-white uppercase">Proof of Payment Verification</h3>
+        <button onclick="closeAdminProofModal()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="text-center bg-black p-3 rounded-xl border border-brand-border">
+        <img id="admin-modal-proof-img" src="" class="max-h-80 mx-auto rounded-lg object-contain">
+      </div>
+      <div class="text-xs space-y-1 text-gray-300">
+        <div><span class="text-gray-400">Order Ref:</span> <span id="admin-proof-ref" class="font-mono text-cyan-300 font-bold"></span></div>
+        <div><span class="text-gray-400">Payment Ref #:</span> <span id="admin-proof-pm-ref" class="font-mono text-amber-300"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Package Form (Add/Edit) -->
+  <div id="modal-package-form" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-brand-border pb-3">
+        <h3 class="text-base font-bold text-white uppercase" id="lbl-pkg-modal-title">Add New Diamond Package</h3>
+        <button onclick="closePackageModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <input type="hidden" id="pkg-input-id">
+        <div>
+          <label class="block text-gray-400 mb-1">Package Title / Name</label>
+          <input type="text" id="pkg-input-name" placeholder="e.g. 257 Diamonds" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-white">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">Diamonds Quantity</label>
+          <input type="number" id="pkg-input-diamonds" placeholder="e.g. 234" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-white">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">Bonus Diamonds Text (Optional)</label>
+          <input type="text" id="pkg-input-bonus" placeholder="e.g. +23 Bonus" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-white">
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1">Price (₱)</label>
+          <input type="number" id="pkg-input-price" placeholder="e.g. 249" class="w-full bg-black/50 border border-brand-border rounded-lg px-3 py-2 text-white">
+        </div>
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="pkg-input-popular" class="rounded bg-black border-brand-border text-cyan-500">
+          <label for="pkg-input-popular" class="text-gray-300">Mark as "Popular Choice"</label>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2 border-t border-brand-border">
+        <button onclick="closePackageModal()" class="px-4 py-2 bg-brand-border text-gray-300 rounded-lg text-xs font-bold">Cancel</button>
+        <button onclick="savePackage()" class="px-4 py-2 bg-cyan-500 text-black font-bold rounded-lg text-xs">Save Package</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ================= DEFAULT INITIAL DATA ================= */
+    const DEFAULT_PACKAGES = [
+      { id: 'pkg_1', name: '86 Diamonds', diamonds: 78, bonus: '+8 Bonus', price: 85, popular: false },
+      { id: 'pkg_2', name: '172 Diamonds', diamonds: 156, bonus: '+16 Bonus', price: 170, popular: false },
+      { id: 'pkg_3', name: '257 Diamonds', diamonds: 234, bonus: '+23 Bonus', price: 249, popular: true },
+      { id: 'pkg_4', name: '706 Diamonds', diamonds: 625, bonus: '+81 Bonus', price: 680, popular: true },
+      { id: 'pkg_5', name: 'Weekly Diamond Pass', diamonds: 210, bonus: 'Pass Perks', price: 125, popular: true },
+      { id: 'pkg_6', name: '2195 Diamonds', diamonds: 1860, bonus: '+335 Bonus', price: 2150, popular: false },
+      { id: 'pkg_7', name: ' Twilight Pass ', diamonds: 0, bonus: 'Exclusive Skin', price: 520, popular: false }
+    ];
+
+    const DEFAULT_PROMOS = [
+      { code: 'MLBB50', type: 'PERCENT', value: 10 },
+      { code: 'WELCOME50', type: 'FIXED', value: 50 }
+    ];
+
+    const DEFAULT_ORDERS = [
+      {
+        ref: 'MLBB-20261019-9182',
+        date: '2026-10-19 14:20',
+        userId: '891029384',
+        zoneId: '3029',
+        ign: 'LegendaryPlayer99',
+        customerName: 'Alex Mercer',
+        customerEmail: 'alex@example.com',
+        packageName: '257 Diamonds',
+        price: 249,
+        pmMethod: 'GCash',
+        pmRef: '100293819203',
+        notes: 'Please reload ASAP',
+        proofImg: 'https://placehold.co/400x300/151b26/00f0ff?text=GCash+Receipt+Sample',
+        status: 'Completed'
+      },
+      {
+        ref: 'MLBB-20261019-4412',
+        date: '2026-10-19 18:05',
+        userId: '128493012',
+        zoneId: '2011',
+        ign: 'MythicGlory_ID',
+        customerName: 'Samantha Cruz',
+        customerEmail: 'sam@example.com',
+        packageName: 'Weekly Diamond Pass',
+        price: 125,
+        pmMethod: 'Maya',
+        pmRef: '992019283741',
+        notes: '',
+        proofImg: 'https://placehold.co/400x300/151b26/8a2be2?text=Maya+Receipt+Sample',
+        status: 'Pending Verification'
+      }
+    ];
+
+    /* ================= STATE MANAGEMENT ================= */
+    let packages = JSON.parse(localStorage.getItem('mlbb_pkgs')) || DEFAULT_PACKAGES;
+    let orders = JSON.parse(localStorage.getItem('mlbb_orders')) || DEFAULT_ORDERS;
+    let promos = JSON.parse(localStorage.getItem('mlbb_promos')) || DEFAULT_PROMOS;
+    let paymentConfigs = JSON.parse(localStorage.getItem('mlbb_pm_cfg')) || {
+      gcash: 'MLBB TOPUP OFFICIAL - 09171234567',
+      maya: 'MLBB TOPUP OFFICIAL - 09187654321',
+      bank: 'BDO: 0012-3456-7890 (MLBB Store Inc)',
+      paypal: 'payments@mlbbtopupstore.com'
+    };
+
+    let selectedPackage = null;
+    let selectedPaymentMethod = 'GCash';
+    let appliedDiscount = 0;
+    let attachedProofImg = '';
+    let isAdminLoggedIn = false;
+
+    /* ================= INITIALIZATION ================= */
+    window.onload = function() {
+      renderPackagesGrid();
+      updatePaymentDetailsUI();
+      renderAdminOrdersTable();
+      renderAdminPackages();
+      renderAdminPromos();
+      updateAdminStats();
+    };
+
+    function saveData() {
+      localStorage.setItem('mlbb_pkgs', JSON.stringify(packages));
+      localStorage.setItem('mlbb_orders', JSON.stringify(orders));
+      localStorage.setItem('mlbb_promos', JSON.stringify(promos));
+      localStorage.setItem('mlbb_pm_cfg', JSON.stringify(paymentConfigs));
+    }
+
+    /* ================= UI TAB NAVIGATION ================= */
+    function switchTab(tab) {
+      document.getElementById('view-store').classList.add('hidden');
+      document.getElementById('view-track').classList.add('hidden');
+      document.getElementById('view-admin').classList.add('hidden');
+
+      // Unselect Nav Styles
+      ['nav-store', 'nav-track', 'nav-admin'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.className = "px-5 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white transition-all flex items-center gap-2 hover:bg-brand-border/40";
+        }
+      });
+
+      if (tab === 'store') {
+        document.getElementById('view-store').classList.remove('hidden');
+        document.getElementById('nav-store').className = "px-5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-md";
+      } else if (tab === 'track') {
+        document.getElementById('view-track').classList.remove('hidden');
+        document.getElementById('nav-track').className = "px-5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-md";
+      } else if (tab === 'admin') {
+        if (!isAdminLoggedIn) {
+          document.getElementById('modal-admin-login').classList.remove('hidden');
+        } else {
+          document.getElementById('view-admin').classList.remove('hidden');
+          document.getElementById('nav-admin').className = "px-5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-md";
+        }
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    /* ================= STORE & PACKAGES LOGIC ================= */
+    function renderPackagesGrid() {
+      const grid = document.getElementById('grid-packages');
+      grid.innerHTML = '';
+
+      const activePkgs = packages;
+      document.getElementById('lbl-package-count').innerText = `${activePkgs.length} Items Available`;
+
+      activePkgs.forEach((pkg) => {
+        const isSelected = selectedPackage && selectedPackage.id === pkg.id;
+        const card = document.createElement('div');
+        card.className = `border-2 border-brand-border bg-black/40 hover:border-cyan-400/60 rounded-xl p-4 cursor-pointer transition flex flex-col justify-between relative overflow-hidden ${isSelected ? 'card-selected' : ''}`;
+        card.onclick = () => selectPackage(pkg);
+
+        card.innerHTML = `
+          ${pkg.popular ? '<span class="absolute top-0 right-0 bg-amber-500 text-black text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">POPULAR</span>' : ''}
+          <div class="space-y-1">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm mb-2">
+              <i class="fa-solid fa-gem"></i>
+            </div>
+            <h4 class="font-bold text-white text-sm leading-tight">${pkg.name}</h4>
+            <span class="text-[10px] text-cyan-400 font-semibold block">${pkg.bonus}</span>
+          </div>
+          <div class="mt-4 border-t border-brand-border/40 pt-2 flex items-center justify-between">
+            <span class="text-xs text-gray-400 font-medium">Price</span>
+            <span class="text-sm font-extrabold text-white">₱${pkg.price.toFixed(2)}</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function selectPackage(pkg) {
+      selectedPackage = pkg;
+      renderPackagesGrid();
+      updateOrderSummaryUI();
+    }
+
+    function verifyIGN() {
+      const userId = document.getElementById('input-userid').value.trim();
+      const zoneId = document.getElementById('input-zoneid').value.trim();
+      const statusLbl = document.getElementById('txt-nickname-status');
+
+      if (!userId || !zoneId) {
+        statusLbl.innerHTML = `<span class="text-red-400 font-semibold"><i class="fa-solid fa-triangle-exclamation"></i> Please enter both User ID and Zone ID first.</span>`;
+        return;
+      }
+
+      // Dynamic mock verification logic
+      const mockNicknames = ["LegendaryPlayer99", "MythicSlayer_PH", "ViperStrike_ML", "ChouMaster2026", "ShadowAssassin"];
+      const hash = (parseInt(userId) || 123) % mockNicknames.length;
+      const verifiedIGN = mockNicknames[hash];
+
+      statusLbl.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check"></i> Account Found: <u class="text-amber-300 font-mono">${verifiedIGN}</u></span>`;
+      
+      // Update Summary
+      document.getElementById('sum-account-id').innerText = `${userId} (${zoneId})`;
+      document.getElementById('sum-player-name').innerText = verifiedIGN;
+    }
+
+    function selectPaymentMethod(pm) {
+      selectedPaymentMethod = pm;
+      document.querySelectorAll('.pm-btn').forEach(btn => {
+        btn.classList.remove('border-cyan-400', 'bg-cyan-500/10');
+      });
+      const activeBtn = document.getElementById(`pm-${pm === 'Bank Transfer' ? 'Bank' : pm}`);
+      if (activeBtn) {
+        activeBtn.classList.add('border-cyan-400', 'bg-cyan-500/10');
+      }
+      updatePaymentDetailsUI();
+    }
+
+    function updatePaymentDetailsUI() {
+      document.getElementById('lbl-active-pm-name').innerText = selectedPaymentMethod;
+      const accName = document.getElementById('lbl-pm-account-name');
+      const accNo = document.getElementById('lbl-pm-account-no');
+
+      if (selectedPaymentMethod === 'GCash') {
+        accName.innerText = "MLBB TOPUP OFFICIAL";
+        accNo.innerText = paymentConfigs.gcash;
+      } else if (selectedPaymentMethod === 'Maya') {
+        accName.innerText = "MLBB TOPUP OFFICIAL";
+        accNo.innerText = paymentConfigs.maya;
+      } else if (selectedPaymentMethod === 'Bank Transfer') {
+        accName.innerText = "MLBB STORE INC";
+        accNo.innerText = paymentConfigs.bank;
+      } else if (selectedPaymentMethod === 'PayPal') {
+        accName.innerText = "PAYPAL DIRECT";
+        accNo.innerText = paymentConfigs.paypal;
+      }
+    }
+
+    /* ================= FILE & URL ATTACHMENT HANDLER ================= */
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          attachedProofImg = e.target.result;
+          showProofPreview(file.name, attachedProofImg);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function toggleUrlInput() {
+      const container = document.getElementById('container-url-input');
+      container.classList.toggle('hidden');
+    }
+
+    function handleUrlInput(val) {
+      if (val.trim() !== '') {
+        attachedProofImg = val.trim();
+        showProofPreview("Image Web Link", attachedProofImg);
+      }
+    }
+
+    function showProofPreview(name, src) {
+      document.getElementById('lbl-file-name').innerText = name;
+      document.getElementById('img-proof-preview').src = src;
+      document.getElementById('preview-proof-box').classList.remove('hidden');
+    }
+
+    /* ================= PROMO CODE LOGIC ================= */
+    function applyPromoCode() {
+      const code = document.getElementById('input-promo-code').value.trim().toUpperCase();
+      const statusLbl = document.getElementById('lbl-promo-status');
+
+      if (!selectedPackage) {
+        statusLbl.innerText = "Please select a package first.";
+        statusLbl.className = "text-[10px] mt-1 font-semibold text-red-400";
+        return;
+      }
+
+      const match = promos.find(p => p.code === code);
+      if (match) {
+        if (match.type === 'PERCENT') {
+          appliedDiscount = (selectedPackage.price * match.value) / 100;
+        } else {
+          appliedDiscount = match.value;
+        }
+        statusLbl.innerText = `Promo Code ${match.code} applied successfully!`;
+        statusLbl.className = "text-[10px] mt-1 font-semibold text-green-400";
+        updateOrderSummaryUI();
+      } else {
+        statusLbl.innerText = "Invalid or expired promo code.";
+        statusLbl.className = "text-[10px] mt-1 font-semibold text-red-400";
+      }
+    }
+
+    function updateOrderSummaryUI() {
+      const userId = document.getElementById('input-userid').value.trim();
+      const zoneId = document.getElementById('input-zoneid').value.trim();
+      
+      if (userId && zoneId) {
+        document.getElementById('sum-account-id').innerText = `${userId} (${zoneId})`;
+      }
+
+      if (selectedPackage) {
+        document.getElementById('sum-package-name').innerText = selectedPackage.name;
+        document.getElementById('sum-base-price').innerText = `₱${selectedPackage.price.toFixed(2)}`;
+
+        const finalPrice = Math.max(0, selectedPackage.price - appliedDiscount);
+        document.getElementById('sum-total-price').innerText = `₱${finalPrice.toFixed(2)}`;
+
+        if (appliedDiscount > 0) {
+          document.getElementById('row-discount').classList.remove('hidden');
+          document.getElementById('row-discount').classList.add('flex');
+          document.getElementById('sum-discount-val').innerText = `-₱${appliedDiscount.toFixed(2)}`;
+        }
+      }
+    }
+
+    /* ================= SUBMIT ORDER LOGIC ================= */
+    function submitOrder() {
+      const userId = document.getElementById('input-userid').value.trim();
+      const zoneId = document.getElementById('input-zoneid').value.trim();
+      const name = document.getElementById('input-customer-name').value.trim();
+      const email = document.getElementById('input-customer-email').value.trim();
+      const pmRef = document.getElementById('input-payment-ref').value.trim();
+      const notes = document.getElementById('input-customer-notes').value.trim();
+
+      if (!userId || !zoneId) {
+        alert("Please enter your MLBB User ID and Zone ID.");
+        return;
+      }
+      if (!selectedPackage) {
+        alert("Please select a Diamond package.");
+        return;
+      }
+      if (!name || !email) {
+        alert("Please fill in your Customer Name and Email address.");
+        return;
+      }
+      if (!pmRef) {
+        alert("Please enter your Payment Reference Number.");
+        return;
+      }
+
+      // Generate Reference Number
+      const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+      const refNum = `MLBB-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${randomSuffix}`;
+      
+      const verifiedIGN = document.getElementById('sum-player-name').innerText !== "Unverified" 
+        ? document.getElementById('sum-player-name').innerText 
+        : "MLBB_Player";
+
+      const finalPrice = Math.max(0, selectedPackage.price - appliedDiscount);
+
+      const newOrder = {
+        ref: refNum,
+        date: new Date().toLocaleString(),
+        userId: userId,
+        zoneId: zoneId,
+        ign: verifiedIGN,
+        customerName: name,
+        customerEmail: email,
+        packageName: selectedPackage.name,
+        price: finalPrice,
+        pmMethod: selectedPaymentMethod,
+        pmRef: pmRef,
+        notes: notes,
+        proofImg: attachedProofImg || 'https://placehold.co/400x300/151b26/00f0ff?text=No+Proof+Attached',
+        status: 'Pending Verification'
+      };
+
+      orders.unshift(newOrder);
+      saveData();
+
+      // Show Receipt Modal
+      displayReceiptModal(newOrder);
+
+      // Refresh Tables
+      renderAdminOrdersTable();
+      updateAdminStats();
+    }
+
+    function displayReceiptModal(order) {
+      document.getElementById('rcpt-ref').innerText = order.ref;
+      document.getElementById('rcpt-date').innerText = order.date;
+      document.getElementById('rcpt-name').innerText = order.customerName;
+      document.getElementById('rcpt-account').innerText = `${order.userId} (${order.zoneId}) - ${order.ign}`;
+      document.getElementById('rcpt-package').innerText = order.packageName;
+      document.getElementById('rcpt-price').innerText = `₱${order.price.toFixed(2)}`;
+      document.getElementById('rcpt-pm').innerText = order.pmMethod;
+      document.getElementById('rcpt-pm-ref').innerText = order.pmRef;
+
+      if (order.proofImg) {
+        document.getElementById('rcpt-proof-img').src = order.proofImg;
+        document.getElementById('rcpt-proof-container').classList.remove('hidden');
+      }
+
+      document.getElementById('modal-order-receipt').classList.remove('hidden');
+    }
+
+    function closeReceiptModal() {
+      document.getElementById('modal-order-receipt').classList.add('hidden');
+    }
+
+    /* ================= TRACK ORDER LOOKUP ================= */
+    function trackOrderLookup() {
+      const query = document.getElementById('input-track-query').value.trim().toLowerCase();
+      const container = document.getElementById('container-track-results');
+      container.innerHTML = '';
+
+      if (!query) {
+        container.innerHTML = `<div class="p-4 bg-brand-card rounded-xl text-center text-xs text-gray-400">Please enter a search reference or User ID.</div>`;
+        return;
+      }
+
+      const results = orders.filter(o => o.ref.toLowerCase().includes(query) || o.userId.toLowerCase().includes(query));
+
+      if (results.length === 0) {
+        container.innerHTML = `<div class="p-8 bg-brand-card rounded-2xl border border-brand-border text-center text-gray-400 text-sm">No orders matching "${query}" were found.</div>`;
+        return;
+      }
+
+      results.forEach(ord => {
+        let statusBadgeClass = "bg-amber-500/20 text-amber-400 border-amber-500/30";
+        if (ord.status === 'Completed') statusBadgeClass = "bg-green-500/20 text-green-400 border-green-500/30";
+        if (ord.status === 'Cancelled') statusBadgeClass = "bg-red-500/20 text-red-400 border-red-500/30";
+        if (ord.status === 'Processing') statusBadgeClass = "bg-blue-500/20 text-blue-400 border-blue-500/30";
+
+        const card = document.createElement('div');
+        card.className = "bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4 shadow-xl";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-brand-border pb-3">
+            <div>
+              <span class="text-xs text-gray-400 font-mono block">Reference: ${ord.ref}</span>
+              <span class="text-xs text-gray-500">${ord.date}</span>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold border ${statusBadgeClass}">${ord.status}</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+            <div>
+              <span class="text-gray-400 block">MLBB Account</span>
+              <span class="font-bold text-white font-mono">${ord.userId} (${ord.zoneId})</span>
+            </div>
+            <div>
+              <span class="text-gray-400 block">Package</span>
+              <span class="font-bold text-cyan-400">${ord.packageName}</span>
+            </div>
+            <div>
+              <span class="text-gray-400 block">Total Price</span>
+              <span class="font-bold text-white">₱${ord.price.toFixed(2)}</span>
+            </div>
+            <div>
+              <span class="text-gray-400 block">Payment Method</span>
+              <span class="font-semibold text-gray-200">${ord.pmMethod} (${ord.pmRef})</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ================= ADMIN AUTH & DASHBOARD ================= */
+    function authenticateAdmin() {
+      const passcode = document.getElementById('input-admin-passcode').value;
+      if (passcode === 'Coconutsml100') {
+        isAdminLoggedIn = true;
+        closeAdminLoginModal();
+        switchTab('admin');
+      } else {
+        alert("Incorrect admin password.");
+      }
+    }
+
+    function closeAdminLoginModal() {
+      document.getElementById('modal-admin-login').classList.add('hidden');
+    }
+
+    function lockAdmin() {
+      isAdminLoggedIn = false;
+      switchTab('store');
+    }
+
+    function switchAdminSubTab(tabName) {
+      ['orders', 'packages', 'discounts', 'payment-settings', 'notifications'].forEach(t => {
+        const btn = document.getElementById(`subtab-${t}`);
+        const panel = document.getElementById(`admin-panel-${t}`);
+        if (btn) btn.className = "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-card text-gray-300 hover:text-white border border-brand-border";
+        if (panel) panel.classList.add('hidden');
+      });
+
+      const activeBtn = document.getElementById(`subtab-${tabName}`);
+      const activePanel = document.getElementById(`admin-panel-${tabName}`);
+      if (activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-cyan-500 text-black";
+      if (activePanel) activePanel.classList.remove('hidden');
+    }
+
+    function renderAdminOrdersTable() {
+      const tbody = document.getElementById('tbl-admin-orders-body');
+      const search = document.getElementById('input-admin-search').value.toLowerCase();
+      const filter = document.getElementById('select-admin-filter').value;
+
+      tbody.innerHTML = '';
+
+      const filtered = orders.filter(o => {
+        const matchesSearch = o.ref.toLowerCase().includes(search) || 
+                              o.userId.toLowerCase().includes(search) || 
+                              o.customerEmail.toLowerCase().includes(search);
+        const matchesFilter = filter === 'ALL' || o.status === filter;
+        return matchesSearch && matchesFilter;
+      });
+
+      filtered.forEach((ord, index) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-brand-border/30 transition";
+
+        tr.innerHTML = `
+          <td class="p-4 font-bold text-cyan-300">${ord.ref}</td>
+          <td class="p-4 text-gray-400 text-[11px]">${ord.date}</td>
+          <td class="p-4"><span class="text-white font-bold">${ord.userId}</span> <span class="text-gray-400">(${ord.zoneId})</span><div class="text-[10px] text-amber-400">${ord.ign}</div></td>
+          <td class="p-4"><div class="text-white font-semibold">${ord.customerName}</div><div class="text-[10px] text-gray-400">${ord.customerEmail}</div></td>
+          <td class="p-4 text-white">${ord.packageName}</td>
+          <td class="p-4 font-bold text-white">₱${ord.price.toFixed(2)}</td>
+          <td class="p-4">
+            <div class="text-gray-200">${ord.pmMethod}</div>
+            <div class="text-[10px] text-gray-400">${ord.pmRef}</div>
+          </td>
+          <td class="p-4">
+            <select onchange="changeOrderStatus('${ord.ref}', this.value)" class="bg-black border border-brand-border text-xs rounded px-2 py-1 text-cyan-300 focus:outline-none">
+              <option value="Pending Verification" ${ord.status === 'Pending Verification' ? 'selected' : ''}>Pending</option>
+              <option value="Processing" ${ord.status === 'Processing' ? 'selected' : ''}>Processing</option>
+              <option value="Completed" ${ord.status === 'Completed' ? 'selected' : ''}>Completed</option>
+              <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+            </select>
+          </td>
+          <td class="p-4 text-center">
+            <button onclick="openAdminProofModal('${ord.ref}')" class="px-2.5 py-1 bg-brand-border hover:bg-cyan-500 hover:text-black text-gray-300 text-[11px] font-bold rounded transition">
+              <i class="fa-solid fa-image"></i> Proof
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function changeOrderStatus(ref, newStatus) {
+      const match = orders.find(o => o.ref === ref);
+      if (match) {
+        match.status = newStatus;
+        saveData();
+        updateAdminStats();
+      }
+    }
+
+    function updateAdminStats() {
+      document.getElementById('stat-total-orders').innerText = orders.length;
+      document.getElementById('stat-pending-orders').innerText = orders.filter(o => o.status === 'Pending Verification').length;
+      
+      const completed = orders.filter(o => o.status === 'Completed');
+      document.getElementById('stat-completed-orders').innerText = completed.length;
+
+      const totalRev = completed.reduce((sum, o) => sum + o.price, 0);
+      document.getElementById('stat-total-revenue').innerText = `₱${totalRev.toFixed(2)}`;
+    }
+
+    function openAdminProofModal(ref) {
+      const ord = orders.find(o => o.ref === ref);
+      if (ord) {
+        document.getElementById('admin-modal-proof-img').src = ord.proofImg;
+        document.getElementById('admin-proof-ref').innerText = ord.ref;
+        document.getElementById('admin-proof-pm-ref').innerText = `${ord.pmMethod} - ${ord.pmRef}`;
+        document.getElementById('modal-admin-proof').classList.remove('hidden');
+      }
+    }
+
+    function closeAdminProofModal() {
+      document.getElementById('modal-admin-proof').classList.add('hidden');
+    }
+
+    /* ================= PACKAGE MANAGER ================= */
+    function renderAdminPackages() {
+      const container = document.getElementById('container-admin-packages-list');
+      container.innerHTML = '';
+
+      packages.forEach(pkg => {
+        const card = document.createElement('div');
+        card.className = "bg-brand-card border border-brand-border rounded-xl p-4 space-y-3 flex flex-col justify-between";
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <h4 class="font-bold text-white text-sm">${pkg.name}</h4>
+              <span class="text-xs text-cyan-400">${pkg.bonus}</span>
+            </div>
+            <span class="text-sm font-bold text-amber-400">₱${pkg.price.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-end gap-2 border-t border-brand-border/40 pt-2">
+            <button onclick="editPackage('${pkg.id}')" class="px-3 py-1 bg-brand-border text-xs text-gray-300 hover:text-white rounded">Edit</button>
+            <button onclick="deletePackage('${pkg.id}')" class="px-3 py-1 bg-red-500/20 text-xs text-red-400 hover:bg-red-500 hover:text-white rounded">Delete</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openPackageModal() {
+      document.getElementById('pkg-input-id').value = '';
+      document.getElementById('pkg-input-name').value = '';
+      document.getElementById('pkg-input-diamonds').value = '';
+      document.getElementById('pkg-input-bonus').value = '';
+      document.getElementById('pkg-input-price').value = '';
+      document.getElementById('pkg-input-popular').checked = false;
+      document.getElementById('modal-package-form').classList.remove('hidden');
+    }
+
+    function closePackageModal() {
+      document.getElementById('modal-package-form').classList.add('hidden');
+    }
+
+    function savePackage() {
+      const id = document.getElementById('pkg-input-id').value || `pkg_${Date.now()}`;
+      const name = document.getElementById('pkg-input-name').value.trim();
+      const diamonds = parseInt(document.getElementById('pkg-input-diamonds').value) || 0;
+      const bonus = document.getElementById('pkg-input-bonus').value.trim();
+      const price = parseFloat(document.getElementById('pkg-input-price').value) || 0;
+      const popular = document.getElementById('pkg-input-popular').checked;
+
+      if (!name || !price) {
+        alert("Please enter package name and price.");
+        return;
+      }
+
+      const existingIndex = packages.findIndex(p => p.id === id);
+      const pkgObj = { id, name, diamonds, bonus, price, popular };
+
+      if (existingIndex >= 0) {
+        packages[existingIndex] = pkgObj;
+      } else {
+        packages.push(pkgObj);
+      }
+
+      saveData();
+      renderPackagesGrid();
+      renderAdminPackages();
+      closePackageModal();
+    }
+
+    function editPackage(id) {
+      const pkg = packages.find(p => p.id === id);
+      if (pkg) {
+        document.getElementById('pkg-input-id').value = pkg.id;
+        document.getElementById('pkg-input-name').value = pkg.name;
+        document.getElementById('pkg-input-diamonds').value = pkg.diamonds;
+        document.getElementById('pkg-input-bonus').value = pkg.bonus;
+        document.getElementById('pkg-input-price').value = pkg.price;
+        document.getElementById('pkg-input-popular').checked = pkg.popular;
+        document.getElementById('modal-package-form').classList.remove('hidden');
+      }
+    }
+
+    function deletePackage(id) {
+      if (confirm("Are you sure you want to delete this package?")) {
+        packages = packages.filter(p => p.id !== id);
+        saveData();
+        renderPackagesGrid();
+        renderAdminPackages();
+      }
+    }
+
+    /* ================= PROMOS & SETTINGS ================= */
+    function renderAdminPromos() {
+      const container = document.getElementById('container-admin-promos-list');
+      container.innerHTML = '';
+
+      promos.forEach(p => {
+        const item = document.createElement('div');
+        item.className = "flex justify-between items-center bg-black/40 p-3 rounded-xl border border-brand-border/60 text-xs";
+        item.innerHTML = `
+          <div>
+            <span class="font-bold text-cyan-400 font-mono">${p.code}</span>
+            <span class="text-gray-400 ml-2">(${p.type === 'PERCENT' ? `${p.value}% Off` : `₱${p.value} Off`})</span>
+          </div>
+          <button onclick="deletePromo('${p.code}')" class="text-red-400 hover:text-red-300 font-bold">Remove</button>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function addPromoCode() {
+      const code = document.getElementById('input-new-promo-code').value.trim().toUpperCase();
+      const type = document.getElementById('select-new-promo-type').value;
+      const value = parseFloat(document.getElementById('input-new-promo-value').value) || 0;
+
+      if (!code || value <= 0) {
+        alert("Please enter a valid promo code and value.");
+        return;
+      }
+
+      promos.push({ code, type, value });
+      saveData();
+      renderAdminPromos();
+      document.getElementById('input-new-promo-code').value = '';
+    }
+
+    function deletePromo(code) {
+      promos = promos.filter(p => p.code !== code);
+      saveData();
+      renderAdminPromos();
+    }
+
+    function savePaymentSettings() {
+      paymentConfigs.gcash = document.getElementById('cfg-gcash').value;
+      paymentConfigs.maya = document.getElementById('cfg-maya').value;
+      paymentConfigs.bank = document.getElementById('cfg-bank').value;
+      paymentConfigs.paypal = document.getElementById('cfg-paypal').value;
+      saveData();
+      updatePaymentDetailsUI();
+      alert("Payment instructions saved successfully.");
+    }
+
+    function saveNotificationSettings() {
+      alert("Notification settings updated successfully.");
+    }
+  </script>
+</body>
+</html>
